@@ -1,98 +1,614 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Naveen | DevOps Engineer</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Naveen Bhatt — Cloud Support & DevOps Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
 
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:         #F8FAFC;
+    --hero-bg:    #080E1A;
+    --hero-mid:   #0D1729;
+    --card:       #FFFFFF;
+    --border:     #E2E8F0;
+    --text:       #0F172A;
+    --muted:      #64748B;
+    --sky:        #38BDF8;
+    --sky-dim:    rgba(56,189,248,0.12);
+    --green:      #10B981;
+    --green-dim:  rgba(16,185,129,0.12);
+    --amber:      #F59E0B;
+    --purple:     #8B5CF6;
+    --purple-dim: rgba(139,92,246,0.12);
+    --display:    'Space Grotesk', sans-serif;
+    --body:       'DM Sans', sans-serif;
+    --mono:       'JetBrains Mono', monospace;
+    --radius:     10px;
+    --shadow:     0 1px 3px rgba(0,0,0,.06), 0 4px 16px rgba(0,0,0,.07);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--body); background: var(--bg); color: var(--text); line-height: 1.6; font-size: 16px; }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem; height: 60px;
+    background: rgba(8,14,26,.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(56,189,248,.12);
+  }
+  .nav-logo { font-family: var(--display); font-weight: 700; color: var(--sky); letter-spacing: -.5px; font-size: 1.05rem; }
+  .nav-links { display: flex; gap: 1.75rem; list-style: none; }
+  .nav-links a { color: #94A3B8; text-decoration: none; font-size: .875rem; font-weight: 500; transition: color .2s; letter-spacing: .01em; }
+  .nav-links a:hover { color: var(--sky); }
+
+  /* ── HERO ── */
+  #hero {
+    background: var(--hero-bg);
+    padding: 6rem 2rem 5rem;
+    display: flex; align-items: center; justify-content: center;
+    min-height: 92vh;
+    position: relative; overflow: hidden;
+  }
+  .hero-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+  .hero-glow {
+    position: absolute; top: -160px; left: 50%; transform: translateX(-50%);
+    width: 700px; height: 400px; border-radius: 50%;
+    background: radial-gradient(ellipse, rgba(56,189,248,.10) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; max-width: 780px; width: 100%; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: .5rem;
+    font-family: var(--mono); font-size: .78rem; color: var(--green);
+    background: var(--green-dim); border: 1px solid rgba(16,185,129,.25);
+    border-radius: 99px; padding: .25rem .9rem; margin-bottom: 1.75rem;
+    letter-spacing: .04em;
+  }
+  .hero-eyebrow::before { content: '●'; font-size: .55rem; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+  h1 {
+    font-family: var(--display); font-weight: 700;
+    font-size: clamp(2.6rem, 6vw, 4.4rem);
+    color: #F1F5F9; line-height: 1.06; letter-spacing: -.03em;
+    margin-bottom: .6rem;
+  }
+  h1 span { color: var(--sky); }
+  .hero-tagline {
+    font-family: var(--mono); font-size: clamp(.85rem, 2vw, 1rem);
+    color: #94A3B8; margin-bottom: 2rem; min-height: 1.6em;
+  }
+  .cursor { display: inline-block; width: 2px; height: 1.1em; background: var(--sky); margin-left: 2px; vertical-align: text-bottom; animation: blink .9s step-end infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+  .hero-desc { color: #94A3B8; font-size: 1.05rem; max-width: 600px; line-height: 1.75; margin-bottom: 2.5rem; }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: var(--sky); color: #080E1A; font-weight: 700;
+    font-family: var(--display); font-size: .9rem; padding: .72rem 1.6rem;
+    border-radius: var(--radius); text-decoration: none; transition: opacity .2s, transform .15s;
+    letter-spacing: -.01em;
+  }
+  .btn-primary:hover { opacity: .88; transform: translateY(-1px); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: .5rem;
+    border: 1px solid rgba(56,189,248,.35); color: var(--sky); background: transparent;
+    font-weight: 600; font-family: var(--display); font-size: .9rem; padding: .72rem 1.6rem;
+    border-radius: var(--radius); text-decoration: none; transition: background .2s, transform .15s;
+  }
+  .btn-outline:hover { background: var(--sky-dim); transform: translateY(-1px); }
+  .hero-stats { display: flex; gap: 2.5rem; margin-top: 3.5rem; padding-top: 2.5rem; border-top: 1px solid rgba(148,163,184,.12); flex-wrap: wrap; }
+  .stat-val { font-family: var(--display); font-size: 2rem; font-weight: 700; color: var(--sky); line-height: 1; }
+  .stat-label { font-size: .8rem; color: #64748B; margin-top: .3rem; letter-spacing: .02em; }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 2rem; max-width: 1060px; margin: 0 auto; }
+  .section-label {
+    font-family: var(--mono); font-size: .72rem; color: var(--sky);
+    letter-spacing: .12em; text-transform: uppercase; margin-bottom: .6rem;
+  }
+  h2 { font-family: var(--display); font-size: clamp(1.6rem, 3vw, 2.1rem); font-weight: 700; letter-spacing: -.02em; color: var(--text); margin-bottom: 2.5rem; }
+  h2 .accent { color: var(--sky); }
+
+  /* ── SKILLS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
+  .skill-cat {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.25rem 1.4rem;
+    box-shadow: var(--shadow);
+    transition: border-color .2s;
+  }
+  .skill-cat:hover { border-color: rgba(56,189,248,.3); }
+  .skill-cat-title {
+    font-family: var(--display); font-weight: 600; font-size: .8rem;
+    text-transform: uppercase; letter-spacing: .07em; color: var(--muted);
+    margin-bottom: .85rem; display: flex; align-items: center; gap: .5rem;
+  }
+  .skill-cat-icon { font-size: 1rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+  .tag {
+    font-family: var(--mono); font-size: .72rem; font-weight: 500;
+    padding: .28rem .7rem; border-radius: 6px;
+  }
+  .tag-sky    { background: var(--sky-dim);    color: #0EA5E9; border: 1px solid rgba(56,189,248,.22); }
+  .tag-green  { background: var(--green-dim);  color: #059669; border: 1px solid rgba(16,185,129,.22); }
+  .tag-purple { background: var(--purple-dim); color: #7C3AED; border: 1px solid rgba(139,92,246,.22); }
+  .tag-amber  { background: rgba(245,158,11,.1); color: #D97706; border: 1px solid rgba(245,158,11,.22); }
+  .tag-slate  { background: #F1F5F9; color: #475569; border: 1px solid #E2E8F0; }
+
+  /* ── EXPERIENCE ── */
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 8px; top: 6px; bottom: 0;
+    width: 2px; background: linear-gradient(to bottom, var(--sky), transparent);
+  }
+  .tl-item { position: relative; padding-left: 2.75rem; margin-bottom: 2.75rem; }
+  .tl-dot {
+    position: absolute; left: 0; top: 6px;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--hero-bg); border: 2.5px solid var(--sky);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tl-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--sky); }
+  .tl-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem 1.6rem;
+    box-shadow: var(--shadow);
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .tl-card:hover { border-color: rgba(56,189,248,.3); box-shadow: 0 4px 24px rgba(56,189,248,.08); }
+  .tl-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap; margin-bottom: .5rem; }
+  .tl-title { font-family: var(--display); font-weight: 700; font-size: 1.05rem; color: var(--text); }
+  .tl-date { font-family: var(--mono); font-size: .75rem; color: var(--muted); white-space: nowrap; padding-top: .15rem; }
+  .tl-company { font-size: .875rem; color: var(--sky); font-weight: 500; margin-bottom: .9rem; }
+  .tl-bullets { list-style: none; display: flex; flex-direction: column; gap: .5rem; }
+  .tl-bullets li { font-size: .9rem; color: #475569; line-height: 1.65; padding-left: 1.1rem; position: relative; }
+  .tl-bullets li::before { content: '→'; position: absolute; left: 0; color: var(--sky); font-size: .8rem; top: .05em; }
+  .tl-break { font-size: .88rem; color: #94A3B8; font-style: italic; margin-top: .75rem; padding: .75rem 1rem; background: #F8FAFC; border-left: 3px solid #CBD5E1; border-radius: 0 6px 6px 0; }
+
+  /* ── PROJECTS ── */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
+  .proj-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    box-shadow: var(--shadow); display: flex; flex-direction: column;
+    transition: border-color .2s, transform .2s;
+  }
+  .proj-card:hover { border-color: rgba(56,189,248,.35); transform: translateY(-3px); }
+  .proj-icon { font-size: 1.8rem; margin-bottom: .85rem; }
+  .proj-title { font-family: var(--display); font-weight: 700; font-size: 1rem; color: var(--text); margin-bottom: .3rem; }
+  .proj-date { font-family: var(--mono); font-size: .72rem; color: var(--muted); margin-bottom: .85rem; }
+  .proj-desc { font-size: .875rem; color: #475569; line-height: 1.65; flex: 1; margin-bottom: 1.1rem; }
+  .proj-stack { display: flex; flex-wrap: wrap; gap: .35rem; }
+
+  /* ── CERTS ── */
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .9rem; }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1rem 1.25rem;
+    display: flex; align-items: center; gap: .85rem;
+    box-shadow: var(--shadow);
+    transition: border-color .2s;
+  }
+  .cert-card:hover { border-color: rgba(16,185,129,.3); }
+  .cert-icon { font-size: 1.4rem; flex-shrink: 0; }
+  .cert-name { font-size: .875rem; font-weight: 600; color: var(--text); line-height: 1.35; }
+  .cert-issuer { font-size: .75rem; color: var(--muted); font-family: var(--mono); margin-top: .2rem; }
+
+  /* ── CONTACT ── */
+  #contact { background: var(--hero-bg); margin: 0; max-width: 100%; padding: 5rem 2rem; }
+  .contact-inner { max-width: 1060px; margin: 0 auto; }
+  #contact h2 { color: #F1F5F9; }
+  #contact .section-label { color: var(--sky); }
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .9rem; margin-top: 2rem; }
+  .contact-card {
+    display: flex; align-items: center; gap: 1rem;
+    background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.08);
+    border-radius: var(--radius); padding: 1rem 1.25rem;
+    text-decoration: none; color: #94A3B8;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .contact-card:hover { background: rgba(56,189,248,.08); border-color: rgba(56,189,248,.3); color: var(--sky); }
+  .contact-icon { font-size: 1.3rem; flex-shrink: 0; }
+  .contact-label { font-size: .72rem; font-family: var(--mono); color: #64748B; text-transform: uppercase; letter-spacing: .06em; }
+  .contact-value { font-size: .9rem; font-weight: 500; margin-top: .1rem; }
+  footer { text-align: center; padding: 1.5rem 2rem; background: var(--hero-bg); border-top: 1px solid rgba(255,255,255,.06); font-size: .8rem; color: #334155; font-family: var(--mono); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 640px) {
+    nav { padding: 0 1rem; }
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: .78rem; }
+    section { padding: 3.5rem 1.25rem; }
+    .hero-stats { gap: 1.5rem; }
+  }
+
+  /* ── SCROLL ANIMATION ── */
+  .fade-up { opacity: 0; transform: translateY(22px); transition: opacity .55s ease, transform .55s ease; }
+  .fade-up.visible { opacity: 1; transform: none; }
+</style>
+</head>
 <body>
 
-<header>
-<h1>Naveen Bhatt</h1>
-<p>Cloud | DevOps | AWS | Docker | Linux | VoIP</p>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">NB.</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
 
-<a href="#contact">+917982598523</a>
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Available for new opportunities</div>
+    <h1>Naveen<br><span>Bhatt</span></h1>
+    <div class="hero-tagline" id="tagline"><span class="cursor"></span></div>
+    <p class="hero-desc">
+      8+ years resolving mission-critical VoIP, SIP, and cloud infrastructure incidents in high-availability environments.
+      Now bridging deep telephony expertise with hands-on AWS, Docker, Kubernetes, and CI/CD skills.
+    </p>
+    <div class="hero-cta">
+      <a href="mailto:bhatt.naveen142303@gmail.com" class="btn-primary">✉ Get in touch</a>
+      <a href="https://linkedin.com/in/naveen-bhatt-19a26353" target="_blank" class="btn-outline">↗ LinkedIn</a>
+      <a href="https://github.com/NaveenB3" target="_blank" class="btn-outline">↗ GitHub</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <div class="stat-val">8+</div>
+        <div class="stat-label">Years experience</div>
+      </div>
+      <div>
+        <div class="stat-val">50+</div>
+        <div class="stat-label">Incidents resolved / month</div>
+      </div>
+      <div>
+        <div class="stat-val">40%</div>
+        <div class="stat-label">CRM sync improvement</div>
+      </div>
+      <div>
+        <div class="stat-val">95%</div>
+        <div class="stat-label">First-call resolution rate</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-</header>
-
+<!-- ABOUT -->
 <section id="about">
-<h2>About Me</h2>
-
-<p>
-Hello! I'm Naveen, a CloudOps and DevOps enthusiast with over eight years of experience in technical support and cloud-based communication systems.
-
-Currently, I work at Acefone Software Pvt. Ltd., where I specialize in VoIP platforms, API and webhook integrations, and troubleshooting complex network- and application-layer issues. My experience in maintaining mission-critical communication systems has strengthened my analytical thinking, problem-solving abilities, and focus on delivering reliable solutions.
-
-Beyond technical support, I am passionate about cloud technologies and DevOps. I have hands-on experience with AWS services such as EC2, S3, IAM, and VPC, along with deploying containerized applications using Docker on Ubuntu Linux. I am continuously expanding my expertise in Kubernetes, CI/CD pipelines, Infrastructure as Code, and cloud automation.
-
-This portfolio showcases my journey, technical skills, certifications, and projects that reflect my commitment to building scalable, secure, and efficient cloud solutions. I enjoy learning new technologies, solving real-world infrastructure challenges, and continuously improving my skills as I transition into a full-time DevOps role.
-
-Thank you for visiting my portfolio—I hope you enjoy exploring my work, and I look forward to connecting with you.
-
+  <div class="section-label">// 01 — about</div>
+  <h2>Cloud telephony meets <span class="accent">DevOps</span></h2>
+  <p style="color:#475569; max-width:680px; font-size:1.025rem; line-height:1.8;">
+    I'm a Cloud Support and Telephony Engineer based in Delhi, India. My work sits at the intersection of
+    real-time communication infrastructure and cloud operations — diagnosing SIP trunking failures, debugging
+    REST API and webhook integrations, and deploying Asterisk VoIP servers on AWS EC2.
+    <br><br>
+    Alongside my core telephony expertise, I've built hands-on DevOps skills through real projects:
+    containerising applications with Docker and Kubernetes, automating deployments with Jenkins CI/CD pipelines,
+    and provisioning cloud infrastructure on AWS EKS. I follow ITIL-aligned practices for incident management
+    and root cause analysis, and I'm actively expanding into Terraform and Python scripting.
+  </p>
 </section>
 
+<!-- SKILLS -->
 <section id="skills">
-
-<h2>Technical Skills</h2>
-
-<ul>
-<li>AWS EC2</li>
-<li>S3</li>
-<li>IAM</li>
-<li>VPC</li>
-<li>Linux</li>
-<li>Docker</li>
-<li>Git</li>
-<li>GitHub</li>
-<li>Kubernetes</li>
-<li>Jenkins</li>
-<li>Python</li>
-<li>VoIP</li>
-</ul>
-
+  <div class="section-label">// 02 — skills</div>
+  <h2>Technical <span class="accent">stack</span></h2>
+  <div class="skills-grid fade-up">
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">☁</span> Cloud & Infrastructure</div>
+      <div class="tags">
+        <span class="tag tag-sky">AWS EC2</span><span class="tag tag-sky">AWS EKS</span>
+        <span class="tag tag-sky">AWS ECS</span><span class="tag tag-sky">S3</span>
+        <span class="tag tag-sky">IAM</span><span class="tag tag-sky">CloudWatch</span>
+        <span class="tag tag-sky">Linux</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">📦</span> Containers & Orchestration</div>
+      <div class="tags">
+        <span class="tag tag-green">Docker</span><span class="tag tag-green">Docker Compose</span>
+        <span class="tag tag-green">Kubernetes</span><span class="tag tag-green">Helm</span>
+        <span class="tag tag-green">AWS EKS</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">⚙</span> CI/CD & IaC</div>
+      <div class="tags">
+        <span class="tag tag-purple">Jenkins</span><span class="tag tag-purple">Git</span>
+        <span class="tag tag-purple">GitHub</span><span class="tag tag-purple">Terraform</span>
+        <span class="tag tag-purple">Ansible</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">📡</span> VoIP & Telephony</div>
+      <div class="tags">
+        <span class="tag tag-amber">SIP</span><span class="tag tag-amber">SIP Trunking</span>
+        <span class="tag tag-amber">PRI</span><span class="tag tag-amber">VoIP</span>
+        <span class="tag tag-amber">Asterisk</span><span class="tag tag-amber">Softphones</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">🔌</span> APIs & Networking</div>
+      <div class="tags">
+        <span class="tag tag-sky">REST APIs</span><span class="tag tag-sky">Webhooks</span>
+        <span class="tag tag-sky">Postman</span><span class="tag tag-sky">TCP/UDP</span>
+        <span class="tag tag-sky">CRM Integrations</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">📊</span> Monitoring & ITSM</div>
+      <div class="tags">
+        <span class="tag tag-green">Prometheus</span><span class="tag tag-green">Grafana</span>
+        <span class="tag tag-slate">Jira</span><span class="tag tag-slate">Zoho Desk</span>
+        <span class="tag tag-slate">ITIL</span><span class="tag tag-slate">RCA</span>
+      </div>
+    </div>
+    <div class="skill-cat">
+      <div class="skill-cat-title"><span class="skill-cat-icon">💻</span> Programming & Scripting</div>
+      <div class="tags">
+        <span class="tag tag-purple">Bash</span><span class="tag tag-purple">Shell Scripting</span>
+        <span class="tag tag-purple">Python (basic)</span>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-label">// 03 — experience</div>
+  <h2>Work <span class="accent">history</span></h2>
+  <div class="timeline">
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <div class="tl-title">Sr. Cloud Telephony Engineer</div>
+          <div class="tl-date">Apr 2026 – Present</div>
+        </div>
+        <div class="tl-company">Acefone Software Pvt Ltd · Gurgaon</div>
+        <ul class="tl-bullets">
+          <li>Diagnosed and resolved 50+ monthly VoIP incidents (SIP trunking, network degradation, API & webhook faults) — cutting average resolution time by 30% through structured RCA and incident management.</li>
+          <li>Validated REST APIs via Postman and debugged webhook payloads in real time to isolate integration failures between telephony services and third-party platforms.</li>
+          <li>Automated CRM–telephony sync workflows, achieving a 40% improvement in data synchronization and eliminating manual intervention.</li>
+          <li>Collaborated with SRE, Product, and Dev teams in Jira to track bugs and support continuous deployment in high-availability cloud environments.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <div class="tl-title">Cloud Telephony Engineer</div>
+          <div class="tl-date">Sep 2022 – Mar 2026</div>
+        </div>
+        <div class="tl-company">Acefone Software Pvt Ltd · Gurgaon</div>
+        <ul class="tl-bullets">
+          <li>Configured customised VoIP and PRI services for 100+ business clients across diverse communication workflows.</li>
+          <li>Managed full incident lifecycle — RCA, fix application, L2/L3 escalation — ensuring resolution within SLA windows.</li>
+          <li>Monitored call quality metrics (latency, jitter, packet loss) and proactively resolved degradation before client impact.</li>
+          <li>Coordinated with cross-functional teams to close infrastructure issues and reduce repeat incidents through post-incident reviews.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <div class="tl-title">Senior Associate – Technical Support</div>
+          <div class="tl-date">Nov 2021 – Mar 2022</div>
+        </div>
+        <div class="tl-company">Tech Mahindra · Noida</div>
+        <ul class="tl-bullets">
+          <li>Delivered L1 technical support for US enterprise customers — 95% first-call resolution rate.</li>
+          <li>Resolved login, account, and licence issues, reducing average resolution time by 20%.</li>
+          <li>Troubleshot G-Suite, Microsoft 365, Zoom, and Slack using ITIL-aligned incident handling practices.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"></div>
+      <div class="tl-card" style="border-left: 3px solid #CBD5E1;">
+        <div class="tl-header">
+          <div class="tl-title" style="color:#64748B;">Career Development Break</div>
+          <div class="tl-date">2017 – 2021</div>
+        </div>
+        <div class="tl-break">
+          Planned break for personal reasons, used to actively upskill in cloud and infrastructure technologies —
+          completing Linux, AWS, Docker, and DevOps fundamentals. This period directly informed the hands-on projects below.
+        </div>
+      </div>
+    </div>
+
+    <div class="tl-item fade-up">
+      <div class="tl-dot"></div>
+      <div class="tl-card">
+        <div class="tl-header">
+          <div class="tl-title">Customer Service Engineer</div>
+          <div class="tl-date">Feb 2013 – May 2017</div>
+        </div>
+        <div class="tl-company">GE Healthcare · Gurgaon</div>
+        <ul class="tl-bullets">
+          <li>Maintained Gamma Camera and PET-CT imaging systems, reducing equipment downtime by 15% through proactive servicing and RCA.</li>
+          <li>Led improvement projects increasing service completion efficiency by 20%; managed incident escalation aligned with GE's service management framework.</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PROJECTS -->
 <section id="projects">
+  <div class="section-label">// 04 — projects</div>
+  <h2>Side <span class="accent">projects</span></h2>
+  <div class="projects-grid">
 
-<h2>Projects</h2>
+    <div class="proj-card fade-up">
+      <div class="proj-icon">📡</div>
+      <div class="proj-title">Asterisk VoIP Server on AWS EC2</div>
+      <div class="proj-date">Aug 2025</div>
+      <p class="proj-desc">
+        Deployed a full Asterisk VoIP server on AWS EC2 with custom sip.conf, extensions.conf, and voicemail.conf.
+        Configured MicroSIP (Windows) and MizuDroid (Android) clients for end-to-end SIP connectivity with
+        validated bidirectional call quality.
+      </p>
+      <div class="proj-stack">
+        <span class="tag tag-sky">AWS EC2</span><span class="tag tag-amber">Asterisk</span>
+        <span class="tag tag-amber">SIP</span><span class="tag tag-slate">MicroSIP</span>
+        <span class="tag tag-slate">MizuDroid</span>
+      </div>
+    </div>
 
-<div>
-<h3>Dockerized Python Application</h3>
-<p>Created Docker images and deployed containerized applications.</p>
-</div>
+    <div class="proj-card fade-up">
+      <div class="proj-icon">☸</div>
+      <div class="proj-title">Two-Tier Flask & MySQL on Kubernetes</div>
+      <div class="proj-date">Jul – Aug 2024</div>
+      <p class="proj-desc">
+        Dockerized a Flask + MySQL app using Docker Compose, deployed to a self-managed Kubernetes cluster,
+        then migrated to AWS EKS. Packaged manifests with Helm and configured a load balancer —
+        reducing deployment downtime by 60%.
+      </p>
+      <div class="proj-stack">
+        <span class="tag tag-green">Docker</span><span class="tag tag-green">Kubernetes</span>
+        <span class="tag tag-sky">AWS EKS</span><span class="tag tag-purple">Helm</span>
+        <span class="tag tag-slate">Flask</span><span class="tag tag-slate">MySQL</span>
+      </div>
+    </div>
 
-<div>
-<h3>AWS Static Website</h3>
-<p>Hosted a portfolio using Amazon S3 and CloudFront.</p>
-</div>
+    <div class="proj-card fade-up">
+      <div class="proj-icon">🔁</div>
+      <div class="proj-title">CI/CD Pipeline — Node.js Todo App</div>
+      <div class="proj-date">Apr 2024</div>
+      <p class="proj-desc">
+        Built an end-to-end CI/CD pipeline on Jenkins: provisioned AWS EC2, containerised the Node.js
+        app with Docker, and connected GitHub to deployment — eliminating all manual deployment steps
+        through full pipeline automation.
+      </p>
+      <div class="proj-stack">
+        <span class="tag tag-purple">Jenkins</span><span class="tag tag-green">Docker</span>
+        <span class="tag tag-sky">AWS EC2</span><span class="tag tag-purple">GitHub</span>
+        <span class="tag tag-slate">Node.js</span>
+      </div>
+    </div>
 
-<div>
-<h3>Terraform AWS Infrastructure</h3>
-<p>Provisioned AWS infrastructure using Infrastructure as Code.</p>
-</div>
-
+  </div>
 </section>
 
-<section id="resume">
-
-<h2>Resume</h2>
-
-<a href="assets/resume.pdf">Download Resume</a>
-
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-label">// 05 — certifications</div>
+  <h2>Certificates &amp; <span class="accent">courses</span></h2>
+  <div class="certs-grid fade-up">
+    <div class="cert-card">
+      <div class="cert-icon">🐳</div>
+      <div><div class="cert-name">Docker Fundamentals</div><div class="cert-issuer">KodeKloud · 2024</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">☸</div>
+      <div><div class="cert-name">Kubernetes Hands-on Tutorial</div><div class="cert-issuer">KodeKloud · 2024</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">⚙</div>
+      <div><div class="cert-name">Ansible Fundamentals for DevOps</div><div class="cert-issuer">KodeKloud · 2024</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">🐧</div>
+      <div><div class="cert-name">Linux for Cloud & DevOps Engineers</div><div class="cert-issuer">KodeKloud · 2024</div></div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-icon">💻</div>
+      <div><div class="cert-name">Shell Scripting for Beginners</div><div class="cert-issuer">Udemy · 2023</div></div>
+    </div>
+  </div>
 </section>
 
-<section id="contact">
-
-<h2>Contact</h2>
-
-Email:
-bhatt.naveen142303@email.com
-
-LinkedIn
-
-GitHub
-
+<!-- CONTACT -->
+<section id="contact" style="padding:5rem 2rem;">
+  <div class="contact-inner">
+    <div class="section-label" style="color:var(--sky);">// 06 — contact</div>
+    <h2 style="color:#F1F5F9;">Let's <span class="accent">connect</span></h2>
+    <p style="color:#94A3B8; max-width:560px; font-size:1rem; line-height:1.75; margin-bottom:.5rem;">
+      Open to cloud support, DevOps, and technical support roles in Delhi NCR or remote.
+      Reach out on any of the channels below.
+    </p>
+    <div class="contact-grid">
+      <a href="mailto:bhatt.naveen142303@gmail.com" class="contact-card">
+        <div class="contact-icon">✉</div>
+        <div><div class="contact-label">Email</div><div class="contact-value">bhatt.naveen142303@gmail.com</div></div>
+      </a>
+      <a href="tel:+917982598523" class="contact-card">
+        <div class="contact-icon">📞</div>
+        <div><div class="contact-label">Phone</div><div class="contact-value">+91 79825 98523</div></div>
+      </a>
+      <a href="https://linkedin.com/in/naveen-bhatt-19a26353" target="_blank" class="contact-card">
+        <div class="contact-icon">💼</div>
+        <div><div class="contact-label">LinkedIn</div><div class="contact-value">naveen-bhatt-19a26353</div></div>
+      </a>
+      <a href="https://github.com/NaveenB3" target="_blank" class="contact-card">
+        <div class="contact-icon">💻</div>
+        <div><div class="contact-label">GitHub</div><div class="contact-value">github.com/NaveenB3</div></div>
+      </a>
+      <div class="contact-card" style="cursor:default;">
+        <div class="contact-icon">📍</div>
+        <div><div class="contact-label">Location</div><div class="contact-value">Delhi, India</div></div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<footer>Built by Naveen Bhatt · Cloud Support & DevOps Engineer · Delhi, India</footer>
+
+<script>
+  // Typing animation
+  const roles = [
+    'Cloud Support Engineer',
+    'DevOps Engineer',
+    'VoIP & Telephony Expert',
+    'SIP | SRE | AWS | Docker',
+  ];
+  const el = document.getElementById('tagline');
+  let ri = 0, ci = 0, deleting = false;
+  function type() {
+    const role = roles[ri];
+    if (!deleting) {
+      el.innerHTML = role.slice(0, ci + 1) + '<span class="cursor"></span>';
+      ci++;
+      if (ci === role.length) { deleting = true; setTimeout(type, 1800); return; }
+    } else {
+      el.innerHTML = role.slice(0, ci - 1) + '<span class="cursor"></span>';
+      ci--;
+      if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; }
+    }
+    setTimeout(type, deleting ? 40 : 65);
+  }
+  type();
+
+  // Scroll fade-in
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => io.observe(el));
+</script>
 </body>
 </html>
